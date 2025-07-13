@@ -4,4 +4,5 @@ import com.furniturestorerestore.repository.entity.Municipality;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MunicipalityRepository extends JpaRepository<Municipality, Long> {
+    public Municipality findByName(String name);
 }

@@ -4,4 +4,5 @@ import com.furniturestorerestore.repository.entity.ZipCode;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ZipCodeRepository extends JpaRepository<ZipCode, Long> {
+    public ZipCode findByZipCode(String zipCode);
 }
