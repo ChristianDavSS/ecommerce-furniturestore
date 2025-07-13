@@ -1,4 +1,4 @@
-package com.furniturestorerestore.request;
+package com.furniturestorerestore.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
