@@ -1,39 +1,29 @@
 package com.furniturestorerestore.service;
 
-import com.furniturestorerestore.dto.UserDto;
+import com.furniturestorerestore.component.UserProfileComponent;
+import com.furniturestorerestore.dto.register.UserDto;
+import com.furniturestorerestore.dto.userProfile.ProfileRequest;
 import com.furniturestorerestore.repository.*;
 import com.furniturestorerestore.repository.entity.*;
 import com.furniturestorerestore.repository.entity.enums.Role;
-import com.furniturestorerestore.dto.request.RegisterRequest;
-import com.furniturestorerestore.dto.response.RegisterResponse;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
+import com.furniturestorerestore.dto.register.RegisterRequest;
+import com.furniturestorerestore.dto.register.RegisterResponse;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+/*
+* Logic to make the CRUD of Users with all the relationships.
+* */
 @Service
 public class UserService {
+    private final UserRepository userRepository;
+    private final UserProfileComponent userProfileComponent;
 
-    private final DataSourceTransactionManagerAutoConfiguration dataSourceTransactionManagerAutoConfiguration;
-    private UserRepository userRepository;
-    private AddressRepository addressRepository;
-    private StateRepository stateRepository;
-    private MunicipalityRepository municipalityRepository;
-    private ZipCodeRepository zipCodeRepository;
-    private NeighborhoodRepository neighborhoodRepository;
-
-    public UserService(UserRepository userRepository, AddressRepository addressRepository, StateRepository stateRepository,
-                       MunicipalityRepository municipalityRepository, ZipCodeRepository zipCodeRepository,
-                       NeighborhoodRepository neighborhoodRepository, DataSourceTransactionManagerAutoConfiguration dataSourceTransactionManagerAutoConfiguration) {
+    public UserService(UserRepository userRepository, UserProfileComponent userProfileComponent) {
         this.userRepository = userRepository;
-        this.addressRepository = addressRepository;
-        this.stateRepository = stateRepository;
-        this.municipalityRepository = municipalityRepository;
-        this.zipCodeRepository = zipCodeRepository;
-        this.neighborhoodRepository = neighborhoodRepository;
-        this.dataSourceTransactionManagerAutoConfiguration = dataSourceTransactionManagerAutoConfiguration;
+        this.userProfileComponent = userProfileComponent;
     }
 
     public RegisterResponse registerUser(RegisterRequest newUser) {
@@ -42,55 +32,20 @@ public class UserService {
             throw new DataIntegrityViolationException("This email address is already in use");
         }
         // Logic for the address
-        State state = stateRepository.findByName(newUser.getState()).orElseGet(()->
-                stateRepository.save(
-                        State.builder()
-                                .name(newUser.getState())
-                                .build()
-                )
-        );
+        State state = userProfileComponent.getOrCreateState(newUser.getState());
 
-        Municipality municipality = municipalityRepository.findByName(newUser.getMunicipality()).orElseGet(()->
-                municipalityRepository.save(
-                        Municipality.builder()
-                                .name(newUser.getMunicipality())
-                                .state(state)
-                                .build()
-                )
-        );
+        Municipality municipality = userProfileComponent.getOrCreateMunicipality(newUser.getMunicipality(), state);
 
-        ZipCode zipCode = zipCodeRepository.findByZipCode(newUser.getZipCode()).orElseGet(()->
-                zipCodeRepository.save(
-                        ZipCode.builder()
-                                .zipCode(newUser.getZipCode())
-                                .municipality(municipality)
-                                .build()
-                )
-        );
+        ZipCode zipCode = userProfileComponent.getOrCreateZipCode(newUser.getZipCode(), municipality);
 
-        Neighborhood neighborhood = neighborhoodRepository.findByName(newUser.getNeighborhood()).orElseGet(()->
-                neighborhoodRepository.save(
-                        Neighborhood.builder()
-                                .name(newUser.getNeighborhood())
-                                .zipCode(zipCode)
-                                .build()
-                )
-        );
+        Neighborhood neighborhood = userProfileComponent.getOrCreateNeighborhood(newUser.getNeighborhood(), zipCode);
+
+
+        PhoneNumber phoneNumber = userProfileComponent.getOrCreatePhoneNumber(newUser.getPhoneNumber());
 
         // Verifying there´s no a double register in the database.
-        Address address = addressRepository.findAddressByAllData(newUser.getStreet(), newUser.getHouseNumber(), state,
-                municipality, zipCode, neighborhood).orElseGet(()->
-                addressRepository.save(
-                        Address.builder()
-                                .street(newUser.getStreet())
-                                .houseNumber(newUser.getHouseNumber())
-                                .state(state)
-                                .municipality(municipality)
-                                .zipCode(zipCode)
-                                .neighborhood(neighborhood)
-                                .build()
-                )
-        );
+        Address address = userProfileComponent.getOrCreateAddress(newUser.getStreet(), newUser.getHouseNumber(), state,
+                municipality, zipCode, neighborhood);
 
         // Creating the user and saving it on the database.
         MyUser user = MyUser.builder()
@@ -100,6 +55,7 @@ public class UserService {
                 .email(newUser.getEmail())
                 .password(newUser.getPassword())
                 .role(Role.USER)
+                .phoneNumber(phoneNumber)
                 .address(address)
                 .build();
 
@@ -128,5 +84,35 @@ public class UserService {
 
     public Optional<UserDto> getUserById(Long id) {
         return userRepository.findById(id).map(UserDto::toDto);
+    }
+
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
+    }
+
+    public UserDto updateUserProfile(Long id, ProfileRequest userRequest) {
+        MyUser myUser = userRepository.findById(id).orElseThrow(()->
+                new DataIntegrityViolationException("User not found")
+        );
+        // Obtain the data from the component
+        State state = userProfileComponent.getOrCreateState(userRequest.getState());
+        Municipality municipality = userProfileComponent.getOrCreateMunicipality(userRequest.getMunicipality(), state);
+        ZipCode zipCode = userProfileComponent.getOrCreateZipCode(userRequest.getZipCode(), municipality);
+        Neighborhood neighborhood = userProfileComponent.getOrCreateNeighborhood(userRequest.getNeighborhood(), zipCode);
+
+        // Set all the new data
+        myUser.setName(userRequest.getName());
+        myUser.setPaternalSurname(userRequest.getPaternalSurname());
+        myUser.setMaternalSurname(userRequest.getMaternalSurname());
+        myUser.setAddress(
+                userProfileComponent.getOrCreateAddress(
+                        userRequest.getStreet(),
+                        userRequest.getHouseNumber(),
+                        state, municipality, zipCode, neighborhood
+                )
+        );
+
+        // Return the user converted to his dto.
+        return UserDto.toDto(userRepository.save(myUser));
     }
 }

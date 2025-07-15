@@ -36,12 +36,13 @@ public class MyUser {
 
     // Relationships
     @OneToMany(mappedBy = "user")
-    List<PhoneNumber> phoneNumbers;
-
-    @OneToMany(mappedBy = "user")
     List<OrderRequest> orderRequests;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
+    @JoinColumn(nullable = false, name = "phoneNumberId")
+    private PhoneNumber phoneNumber;
+
+    @ManyToOne()
     @JoinColumn(nullable = false, name = "addressId")
     private Address address;
 }

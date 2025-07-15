@@ -24,13 +24,13 @@ public class Municipality {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "municipality")
+    @OneToMany(mappedBy = "municipality")
     List<Address> addresses;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(nullable = false, name = "stateId")
     private State state;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "municipality")
+    @OneToMany(mappedBy = "municipality")
     List<ZipCode> zipCodes;
 }

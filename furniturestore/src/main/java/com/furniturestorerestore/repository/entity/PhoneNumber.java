@@ -1,10 +1,18 @@
 package com.furniturestorerestore.repository.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class PhoneNumber {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,7 +21,6 @@ public class PhoneNumber {
     @Column(nullable = false, unique = true, length = 10)
     private String phoneNumber;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(nullable = false, name = "userId")
-    private MyUser user;
+    @OneToMany(mappedBy = "phoneNumber")
+    private List<MyUser> users;
 }

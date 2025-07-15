@@ -1,7 +1,5 @@
-package com.furniturestorerestore.dto;
+package com.furniturestorerestore.dto.register;
 
-import com.furniturestorerestore.dto.response.StateDto;
-import com.furniturestorerestore.repository.entity.Address;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

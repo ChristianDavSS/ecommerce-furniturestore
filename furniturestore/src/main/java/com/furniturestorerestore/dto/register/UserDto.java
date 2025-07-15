@@ -1,6 +1,5 @@
-package com.furniturestorerestore.dto;
+package com.furniturestorerestore.dto.register;
 
-import com.furniturestorerestore.dto.response.StateDto;
 import com.furniturestorerestore.repository.entity.*;
 import com.furniturestorerestore.repository.entity.enums.Role;
 import lombok.AllArgsConstructor;
@@ -19,6 +18,8 @@ public class UserDto {
     private String maternalSurname;
     private String email;
     private Role role;
+
+    private PhoneNumberDto phoneNumber;
 
     private AddressDto address;
 
@@ -58,6 +59,12 @@ public class UserDto {
                 )
                 .build();
 
+        PhoneNumberDto phoneNumber = PhoneNumberDto.builder()
+                .id(user.getPhoneNumber().getId())
+                .phoneNumber(user.getPhoneNumber().getPhoneNumber())
+                .build();
+
+        // Returning the response as a UserDto object.
         return UserDto.builder()
                 .id(user.getId())
                 .name(user.getName())
@@ -65,6 +72,7 @@ public class UserDto {
                 .maternalSurname(user.getMaternalSurname())
                 .email(user.getEmail())
                 .role(user.getRole())
+                .phoneNumber(phoneNumber)
                 .address(addressDto)
                 .build();
     }

@@ -24,13 +24,13 @@ public class ZipCode {
     @Column(nullable = false, unique = true, length = 5)
     private String zipCode;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(nullable = false, name = "municipalityId")
     private Municipality municipality;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "zipCode")
+    @OneToMany(mappedBy = "zipCode")
     private List<Address> addresses;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "zipCode")
+    @OneToMany(mappedBy = "zipCode")
     private List<Neighborhood> neighborhoods;
 }

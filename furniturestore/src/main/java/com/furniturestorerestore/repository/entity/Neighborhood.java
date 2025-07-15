@@ -24,10 +24,10 @@ public class Neighborhood {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "neighborhood")
+    @OneToMany(mappedBy = "neighborhood")
     List<Address> addresses;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(nullable = false, name = "zipCodeId")
     private ZipCode zipCode;
 }

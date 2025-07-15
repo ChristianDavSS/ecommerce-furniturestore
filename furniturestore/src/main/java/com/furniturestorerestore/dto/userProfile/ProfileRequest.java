@@ -1,18 +1,20 @@
-package com.furniturestorerestore.dto.request;
+package com.furniturestorerestore.dto.userProfile;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterRequest {
+@Builder
+public class ProfileRequest {
     private String name;
     private String paternalSurname;
     private String maternalSurname;
-    private String email;
-    private String password;
+
+    private String phoneNumber;
 
     private String street;
     private String houseNumber;

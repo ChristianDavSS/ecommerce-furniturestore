@@ -1,4 +1,4 @@
-package com.furniturestorerestore.dto;
+package com.furniturestorerestore.dto.register;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class NeighborhoodDto {
+public class RegisterResponse {
     private Long id;
     private String name;
+    private String paternalSurname;
+    private String maternalSurname;
+    private String email;
 }

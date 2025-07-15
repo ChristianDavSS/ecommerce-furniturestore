@@ -9,11 +9,11 @@ public class OrderProduct {
     @EmbeddedId
     private OrderProductFK orderProductId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @MapsId("orderId")
     private OrderRequest orderRequest;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @MapsId("productId")
     private Product product;
 

@@ -31,19 +31,19 @@ public class Address {
     @OneToMany(mappedBy = "address")
     List<MyUser> myUsers;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(nullable = false, name = "stateId")
     private State state;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(nullable = false, name = "municipalityId")
     private Municipality municipality;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(nullable = false, name = "zipCodeId")
     private ZipCode zipCode;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(nullable = false, name = "neighborhoodId")
     private Neighborhood neighborhood;
 }

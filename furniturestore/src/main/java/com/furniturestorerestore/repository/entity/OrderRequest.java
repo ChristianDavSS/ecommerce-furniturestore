@@ -20,7 +20,7 @@ public class OrderRequest {
     @Column(nullable = false)
     private Status status;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(nullable = false, name = "userId")
     private MyUser user;
 }

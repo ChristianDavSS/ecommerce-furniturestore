@@ -15,6 +15,6 @@ public class Category {
     @Column(unique=true, nullable=false)
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+    @OneToMany(mappedBy = "category")
     private List<Product> products;
 }

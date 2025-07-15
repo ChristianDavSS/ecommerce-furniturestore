@@ -24,7 +24,7 @@ public class Product {
     @Column(nullable = false)
     private Integer stock;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(nullable = false, name = "categoryId")
     private Category category;
 }
