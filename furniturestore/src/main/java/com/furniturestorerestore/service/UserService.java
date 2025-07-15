@@ -1,13 +1,12 @@
 package com.furniturestorerestore.service;
 
+import com.furniturestorerestore.component.UserMapper;
 import com.furniturestorerestore.component.UserProfileComponent;
-import com.furniturestorerestore.dto.register.UserDto;
+import com.furniturestorerestore.dto.register.*;
 import com.furniturestorerestore.dto.userProfile.ProfileRequest;
 import com.furniturestorerestore.repository.*;
 import com.furniturestorerestore.repository.entity.*;
 import com.furniturestorerestore.repository.entity.enums.Role;
-import com.furniturestorerestore.dto.register.RegisterRequest;
-import com.furniturestorerestore.dto.register.RegisterResponse;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
@@ -19,14 +18,16 @@ import java.util.Optional;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
     private final UserProfileComponent userProfileComponent;
 
-    public UserService(UserRepository userRepository, UserProfileComponent userProfileComponent) {
+    public UserService(UserRepository userRepository, UserMapper userMapper, UserProfileComponent userProfileComponent){
         this.userRepository = userRepository;
+        this.userMapper = userMapper;
         this.userProfileComponent = userProfileComponent;
     }
 
-    public RegisterResponse registerUser(RegisterRequest newUser) {
+    public UserDto registerUser(RegisterRequest newUser) {
         // Verify the email isn´t registered yet.
         if (userRepository.existsByEmail(newUser.getEmail())) {
             throw new DataIntegrityViolationException("This email address is already in use");
@@ -63,13 +64,7 @@ public class UserService {
         user = userRepository.save(user);
 
         // Build and return the response
-        return RegisterResponse.builder()
-                .id(user.getId())
-                .name(user.getName())
-                .paternalSurname(user.getPaternalSurname())
-                .maternalSurname(user.getMaternalSurname())
-                .email(user.getEmail())
-                .build();
+        return userMapper.toDto(user);
     }
 
     public List<UserDto> getAllUsers() {
@@ -79,11 +74,11 @@ public class UserService {
         List<MyUser> users = userRepository.findAll();
 
         // We return the new list where we applied toDto() method to every object.
-        return users.stream().map(UserDto::toDto).toList();
+        return users.stream().map(userMapper::toDto).toList();
     }
 
     public Optional<UserDto> getUserById(Long id) {
-        return userRepository.findById(id).map(UserDto::toDto);
+        return userRepository.findById(id).map(userMapper::toDto);
     }
 
     public void deleteUser(Long id) {
@@ -104,6 +99,11 @@ public class UserService {
         myUser.setName(userRequest.getName());
         myUser.setPaternalSurname(userRequest.getPaternalSurname());
         myUser.setMaternalSurname(userRequest.getMaternalSurname());
+        myUser.setPhoneNumber(
+                userProfileComponent.getOrCreatePhoneNumber(
+                        userRequest.getPhoneNumber()
+                )
+        );
         myUser.setAddress(
                 userProfileComponent.getOrCreateAddress(
                         userRequest.getStreet(),
@@ -113,6 +113,6 @@ public class UserService {
         );
 
         // Return the user converted to his dto.
-        return UserDto.toDto(userRepository.save(myUser));
+        return userMapper.toDto(userRepository.save(myUser));
     }
 }
