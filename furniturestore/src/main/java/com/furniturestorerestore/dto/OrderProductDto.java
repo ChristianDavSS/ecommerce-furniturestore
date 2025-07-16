@@ -1,4 +1,4 @@
-package com.furniturestorerestore.dto.register;
+package com.furniturestorerestore.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MunicipalityDto {
-    private Long id;
-    private String name;
+public class OrderProductDto {
+    private Long orderId;
+    private Long productId;
+    private Integer quantity;
 }

@@ -1,6 +1,6 @@
 package com.furniturestorerestore.component;
 
-import com.furniturestorerestore.dto.register.*;
+import com.furniturestorerestore.dto.*;
 import com.furniturestorerestore.repository.entity.Address;
 import com.furniturestorerestore.repository.entity.MyUser;
 import org.springframework.stereotype.Component;

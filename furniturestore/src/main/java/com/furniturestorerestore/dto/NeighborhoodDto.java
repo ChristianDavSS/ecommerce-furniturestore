@@ -1,4 +1,4 @@
-package com.furniturestorerestore.dto.register;
+package com.furniturestorerestore.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

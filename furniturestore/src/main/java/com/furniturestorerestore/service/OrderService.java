@@ -8,6 +8,7 @@ import com.furniturestorerestore.repository.entity.MyUser;
 import com.furniturestorerestore.repository.entity.OrderRequest;
 import com.furniturestorerestore.repository.entity.enums.Status;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -48,6 +49,11 @@ public class OrderService {
         return orderMapper.toDto(orderRepository.findById(orderId).orElseThrow(()->
                 new RuntimeException("Order not found"))
         );
+    }
+
+    public List<OrderDto> getOrdersByUserId(@PathVariable Long id) {
+        List<OrderRequest> orders = orderRepository.findByUserId(id);
+        return orders.stream().map(orderMapper::toDto).toList();
     }
 
     public OrderDto updateOrder(Long orderId, Status status) {

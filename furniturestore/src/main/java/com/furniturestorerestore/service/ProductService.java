@@ -2,7 +2,7 @@ package com.furniturestorerestore.service;
 
 import com.furniturestorerestore.component.ProductMapper;
 import com.furniturestorerestore.dto.ProductDto;
-import com.furniturestorerestore.dto.ProductRequest;
+import com.furniturestorerestore.dto.request.ProductRequest;
 import com.furniturestorerestore.repository.CategoryRepository;
 import com.furniturestorerestore.repository.ProductRepository;
 import com.furniturestorerestore.repository.entity.Category;
@@ -27,7 +27,7 @@ public class ProductService {
 
     public ProductDto saveProduct(ProductRequest product) {
         Category category = categoryRepository.findByName(product.getCategory()).orElseThrow(()->
-                    new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found")
+                    new ResponseStatusException(HttpStatus.CONFLICT, "Category not found")
                 );
         if (productRepository.existsByName(product.getName())){
             throw new ResponseStatusException(HttpStatus.CONFLICT, "This product already exists");
@@ -59,10 +59,10 @@ public class ProductService {
 
     public ProductDto updateProduct(Long id, ProductRequest product) {
         Product myProduct = productRepository.findById(id).orElseThrow(()->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found")
+                new ResponseStatusException(HttpStatus.CONFLICT, "Product not found")
         );
         Category category = categoryRepository.findByName(product.getCategory()).orElseThrow(()->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found")
+                new ResponseStatusException(HttpStatus.CONFLICT, "Category not found")
         );
         myProduct.setPicture(product.getPicture());
         myProduct.setName(product.getName());

@@ -1,8 +1,7 @@
 package com.furniturestorerestore.controller;
 
 import com.furniturestorerestore.dto.ProductDto;
-import com.furniturestorerestore.dto.ProductRequest;
-import com.furniturestorerestore.repository.entity.Product;
+import com.furniturestorerestore.dto.request.ProductRequest;
 import com.furniturestorerestore.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 

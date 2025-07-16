@@ -1,6 +1,5 @@
-package com.furniturestorerestore.dto.register;
+package com.furniturestorerestore.dto;
 
-import com.furniturestorerestore.repository.entity.*;
 import com.furniturestorerestore.repository.entity.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

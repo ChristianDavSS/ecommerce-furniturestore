@@ -1,11 +1,17 @@
 package com.furniturestorerestore.repository.entity;
 
 import jakarta.persistence.Embeddable;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class OrderProductFK implements Serializable {
     private Long orderId;
     private Long productId;

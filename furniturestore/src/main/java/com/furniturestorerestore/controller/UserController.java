@@ -1,8 +1,8 @@
 package com.furniturestorerestore.controller;
 
-import com.furniturestorerestore.dto.register.UserDto;
-import com.furniturestorerestore.dto.register.RegisterRequest;
-import com.furniturestorerestore.dto.userProfile.ProfileRequest;
+import com.furniturestorerestore.dto.UserDto;
+import com.furniturestorerestore.dto.request.RegisterRequest;
+import com.furniturestorerestore.dto.request.ProfileRequest;
 import com.furniturestorerestore.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

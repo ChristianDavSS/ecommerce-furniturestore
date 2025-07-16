@@ -1,4 +1,4 @@
-package com.furniturestorerestore.dto.register;
+package com.furniturestorerestore.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PhoneNumberDto {
+public class ZipCodeDto {
     private Long id;
-    private String phoneNumber;
+    private String zipCode;
 }

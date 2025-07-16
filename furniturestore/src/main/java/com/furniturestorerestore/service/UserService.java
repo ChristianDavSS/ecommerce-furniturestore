@@ -2,8 +2,9 @@ package com.furniturestorerestore.service;
 
 import com.furniturestorerestore.component.UserMapper;
 import com.furniturestorerestore.component.UserProfileComponent;
-import com.furniturestorerestore.dto.register.*;
-import com.furniturestorerestore.dto.userProfile.ProfileRequest;
+import com.furniturestorerestore.dto.UserDto;
+import com.furniturestorerestore.dto.request.*;
+import com.furniturestorerestore.dto.request.ProfileRequest;
 import com.furniturestorerestore.repository.*;
 import com.furniturestorerestore.repository.entity.*;
 import com.furniturestorerestore.repository.entity.enums.Role;
