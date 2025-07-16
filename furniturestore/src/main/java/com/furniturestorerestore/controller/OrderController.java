@@ -1,7 +1,6 @@
 package com.furniturestorerestore.controller;
 
 import com.furniturestorerestore.dto.OrderDto;
-import com.furniturestorerestore.repository.entity.OrderRequest;
 import com.furniturestorerestore.repository.entity.enums.Status;
 import com.furniturestorerestore.service.OrderService;
 import org.springframework.web.bind.annotation.*;

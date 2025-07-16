@@ -25,6 +25,7 @@ public class OrderService {
     }
 
     public OrderDto saveOrder(Long userId) {
+        // HERE THE FRONT WILL SEND THE BACKEND PRODUCTS
         MyUser user = userRepository.findById(userId).orElseThrow(()->
                 new RuntimeException("User not found"));
 
