@@ -2,6 +2,7 @@ package com.furniturestorerestore.service;
 
 import com.furniturestorerestore.component.UserMapper;
 import com.furniturestorerestore.component.UserProfileComponent;
+import com.furniturestorerestore.config.SecurityConfig;
 import com.furniturestorerestore.dto.UserDto;
 import com.furniturestorerestore.dto.request.*;
 import com.furniturestorerestore.dto.request.ProfileRequest;
@@ -21,11 +22,13 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final UserProfileComponent userProfileComponent;
+    private final SecurityConfig securityConfig;
 
-    public UserService(UserRepository userRepository, UserMapper userMapper, UserProfileComponent userProfileComponent){
+    public UserService(UserRepository userRepository, UserMapper userMapper, UserProfileComponent userProfileComponent, SecurityConfig securityConfig){
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.userProfileComponent = userProfileComponent;
+        this.securityConfig = securityConfig;
     }
 
     public UserDto registerUser(RegisterRequest newUser) {
@@ -55,7 +58,8 @@ public class UserService {
                 .paternalSurname(newUser.getPaternalSurname())
                 .maternalSurname(newUser.getMaternalSurname())
                 .email(newUser.getEmail())
-                .password(newUser.getPassword())
+                // Encriptamos y guardamos la contraseña
+                .password(securityConfig.bCryptPasswordEncoder().encode(newUser.getPassword()))
                 .role(Role.USER)
                 .phoneNumber(phoneNumber)
                 .address(address)
