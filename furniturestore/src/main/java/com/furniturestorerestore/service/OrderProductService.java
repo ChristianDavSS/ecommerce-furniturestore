@@ -33,7 +33,7 @@ public class OrderProductService {
         );
 
         if (orderProductDto.getQuantity() > product.getStock()){
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Too many products");
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Too many products");
         }
 
         OrderProductFK id = OrderProductFK.builder()

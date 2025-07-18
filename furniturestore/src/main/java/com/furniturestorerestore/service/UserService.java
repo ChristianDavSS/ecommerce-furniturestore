@@ -10,7 +10,9 @@ import com.furniturestorerestore.repository.*;
 import com.furniturestorerestore.repository.entity.*;
 import com.furniturestorerestore.repository.entity.enums.Role;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -82,8 +84,10 @@ public class UserService {
         return users.stream().map(userMapper::toDto).toList();
     }
 
-    public Optional<UserDto> getUserById(Long id) {
-        return userRepository.findById(id).map(userMapper::toDto);
+    public UserDto getUserById(Long id) {
+        return userMapper.toDto(userRepository.findById(id).orElseThrow(()->
+                        new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found")
+                ));
     }
 
     public void deleteUser(Long id) {
@@ -92,7 +96,7 @@ public class UserService {
 
     public UserDto updateUserProfile(Long id, ProfileRequest userRequest) {
         MyUser myUser = userRepository.findById(id).orElseThrow(()->
-                new DataIntegrityViolationException("User not found")
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found")
         );
         // Obtain the data from the component
         State state = userProfileComponent.getOrCreateState(userRequest.getState());

@@ -7,8 +7,10 @@ import com.furniturestorerestore.repository.UserRepository;
 import com.furniturestorerestore.repository.entity.MyUser;
 import com.furniturestorerestore.repository.entity.OrderRequest;
 import com.furniturestorerestore.repository.entity.enums.Status;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -48,8 +50,8 @@ public class OrderService {
 
     public OrderDto getOrderById(Long orderId) {
         return orderMapper.toDto(orderRepository.findById(orderId).orElseThrow(()->
-                new RuntimeException("Order not found"))
-        );
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found")
+        ));
     }
 
     public List<OrderDto> getOrdersByUserId(@PathVariable Long id) {
@@ -59,7 +61,7 @@ public class OrderService {
 
     public OrderDto updateOrder(Long orderId, Status status) {
         OrderRequest order = orderRepository.findById(orderId).orElseThrow(()->
-                new RuntimeException("Order not found")
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found")
         );
         order.setStatus(status);
         order.setUpdateDate(LocalDateTime.now());

@@ -27,10 +27,10 @@ public class ProductService {
 
     public ProductDto saveProduct(ProductRequest product) {
         Category category = categoryRepository.findByName(product.getCategory()).orElseThrow(()->
-                    new ResponseStatusException(HttpStatus.CONFLICT, "Category not found")
+                    new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found")
                 );
         if (productRepository.existsByName(product.getName())){
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "This product already exists");
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "This product already exists");
         };
 
         Product myProduct = Product.builder()
@@ -59,10 +59,10 @@ public class ProductService {
 
     public ProductDto updateProduct(Long id, ProductRequest product) {
         Product myProduct = productRepository.findById(id).orElseThrow(()->
-                new ResponseStatusException(HttpStatus.CONFLICT, "Product not found")
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found")
         );
         Category category = categoryRepository.findByName(product.getCategory()).orElseThrow(()->
-                new ResponseStatusException(HttpStatus.CONFLICT, "Category not found")
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found")
         );
         myProduct.setPicture(product.getPicture());
         myProduct.setName(product.getName());
