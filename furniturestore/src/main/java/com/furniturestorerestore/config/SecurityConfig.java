@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -34,9 +35,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
+                // Enabling the CORS
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(
-                        req -> req.requestMatchers("/product").authenticated().anyRequest().permitAll()
+                        req -> req.anyRequest().permitAll()
                 )
                 .formLogin(form -> form.disable())
                 .build();
@@ -56,7 +59,7 @@ public class SecurityConfig {
     @Bean
     public UserDetailsService userDetailsService() throws Exception {
         /*
-        * Get an user by the email to check the password on  the provider
+        * Get a user by the email to check the password on  the provider
         * */
         return email -> userRepository.findByEmail(email).orElseThrow(() ->
                 new UsernameNotFoundException("User not found")
@@ -81,6 +84,7 @@ public class SecurityConfig {
         configuration.setAllowedOrigins(List.of("http://localhost:5173"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowCredentials(true);
+        configuration.setAllowedHeaders(List.of("*"));
         configuration.setMaxAge(3600L);
         configuration.setAllowCredentials(true);
 

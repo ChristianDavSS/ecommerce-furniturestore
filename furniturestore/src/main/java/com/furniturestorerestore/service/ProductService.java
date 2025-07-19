@@ -26,7 +26,7 @@ public class ProductService {
     }
 
     public ProductDto saveProduct(ProductRequest product) {
-        Category category = categoryRepository.findByName(product.getCategory()).orElseThrow(()->
+        Category category = categoryRepository.findById(product.getCategoryId()).orElseThrow(()->
                     new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found")
                 );
         if (productRepository.existsByName(product.getName())){
@@ -61,7 +61,7 @@ public class ProductService {
         Product myProduct = productRepository.findById(id).orElseThrow(()->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found")
         );
-        Category category = categoryRepository.findByName(product.getCategory()).orElseThrow(()->
+        Category category = categoryRepository.findById(product.getCategoryId()).orElseThrow(()->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found")
         );
         myProduct.setPicture(product.getPicture());

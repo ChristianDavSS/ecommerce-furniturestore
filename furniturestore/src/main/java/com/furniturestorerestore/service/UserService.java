@@ -36,7 +36,7 @@ public class UserService {
     public UserDto registerUser(RegisterRequest newUser) {
         // Verify the email isn´t registered yet.
         if (userRepository.existsByEmail(newUser.getEmail())) {
-            throw new DataIntegrityViolationException("This email address is already in use");
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "User already exist");
         }
         // Logic for the address
         State state = userProfileComponent.getOrCreateState(newUser.getState());

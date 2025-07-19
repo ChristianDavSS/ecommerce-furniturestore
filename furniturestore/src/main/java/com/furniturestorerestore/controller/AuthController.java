@@ -4,6 +4,7 @@ import com.furniturestorerestore.dto.request.LoginRequest;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/auth")
@@ -54,7 +56,7 @@ public class AuthController {
     @PostMapping("/logout")
     public void logout(HttpServletRequest request) throws ServletException {
         if (request.getUserPrincipal() == null){
-            throw new ServletException("You are not logged in");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User is not logged in");
         }
         // We invalidate the session without creating another one
         request.getSession(false).invalidate();

@@ -19,8 +19,8 @@ public class CategoryService {
         this.categoryMapper = categoryMapper;
     }
 
-    public Category createCategory(Category category) {
-        return categoryRepository.save(category);
+    public CategoryDto createCategory(Category category) {
+        return categoryMapper.toDto(categoryRepository.save(category));
     }
 
     public List<CategoryDto> getAllCategories() {

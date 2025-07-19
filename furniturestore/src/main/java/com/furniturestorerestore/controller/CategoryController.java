@@ -1,5 +1,6 @@
 package com.furniturestorerestore.controller;
 
+import com.furniturestorerestore.component.CategoryMapper;
 import com.furniturestorerestore.dto.CategoryDto;
 import com.furniturestorerestore.repository.entity.Category;
 import com.furniturestorerestore.service.CategoryService;
@@ -16,7 +17,7 @@ public class CategoryController {
     }
 
     @PostMapping
-    public Category createCategory(@RequestBody Category category) {
+    public CategoryDto createCategory(@RequestBody Category category) {
         return categoryService.createCategory(category);
     }
 

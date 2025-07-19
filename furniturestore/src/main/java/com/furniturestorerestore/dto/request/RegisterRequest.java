@@ -16,10 +16,10 @@ public class RegisterRequest {
 
     private String phoneNumber;
 
-    private String street;
-    private String houseNumber;
     private String state;
     private String municipality;
     private String zipCode;
     private String neighborhood;
+    private String street;
+    private String houseNumber;
 }
