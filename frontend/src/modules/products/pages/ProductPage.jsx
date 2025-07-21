@@ -14,14 +14,18 @@ function ProductPage() {
     getProductById();
   }, [])
 
+  const formatter = Intl.NumberFormat('en-US', {style: 'currency', currency: 'MXN', minimumFractionDigits: 2})
+
   return (
-    <div className=''>
-      <img src={product?.picture} alt="product" />
-      <h3>{product?.name}</h3>
-      <h4>{product?.category.name}</h4>
-      <p>{product?.description}</p>
-      <p>{product?.stock}</p>
-      <p>{product?.price}</p>
+    <div className='flex items-center'>
+      <img src={product?.picture} alt="product" className='flex max-w-7xl w-1/2'/>
+      <div className='flex flex-col items-center w-1/2 text-3xl h-full'>
+        <h3 className='font-bold'>{product?.name}</h3>
+        <h4>Categoría: {product?.category.name}</h4>
+        <p>{product?.description}</p>
+        <p>Disponibles: {product?.stock}</p>
+        <p>{formatter.format(product?.price)}</p>
+      </div>
     </div>
   )
 }

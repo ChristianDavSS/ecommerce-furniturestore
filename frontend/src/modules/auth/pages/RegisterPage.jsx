@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react'
+import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { request } from '@shared'
 
@@ -22,48 +22,52 @@ function RegisterPage() {
   return (
     <div className='grid grid-cols-2'>
       <img src="https://img1.picmix.com/output/stamp/normal/1/6/2/4/2304261_9a959.png" alt="img" className='w-screen'/>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <p>Nombre(s)</p>
-        <input type="text"
-        {...register('name', {required: true})}/>
-        <p>Apellido paterno</p>
-        <input type='text'
-        {...register('paternalSurname', {required: false})}/>
-        <p>Apellido materno</p>
-        <input type="text"
-        {...register('maternalSurname', {required: false})}/>
-        <p>Correo electrónico</p>
-        <input type="email"
-        {...register('email', {required: true})}/>
-        <p>Contraseña</p>
-        <input type="password"
-        {...register('password', {required: true})}/>
-        <p>Número de teléfono</p>
-        <input type="number"
-        {...register('phoneNumber', {required: true, minLength: 10, maxLength: 10})}/>
+      <div className='flex flex-col items-center justify-center bg-blue-900'>
+        <p className='text-xl font-semibold text-white p-4'>¡Bienvenido!</p>
+        <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col w-[19rem] text-white'>
+          <p className='font-semibold'>Nombre(s)</p>
+          <input type="text" className='bg-white/10 rounded-sm'
+          {...register('name', {required: true})}/>
+          <p className='font-semibold'>Apellido paterno</p>
+          <input type='text' className='bg-white/10 rounded-sm'
+          {...register('paternalSurname', {required: false})}/>
+          <p className='font-semibold'>Apellido materno</p>
+          <input type="text" className='bg-white/10 rounded-sm'
+          {...register('maternalSurname', {required: false})}/>
+          <p className='font-semibold'>Correo electrónico</p>
+          <input type="email" className='bg-white/10 rounded-sm'
+          {...register('email', {required: true})}/>
+          <p className='font-semibold'>Contraseña</p>
+          <input type="password" className='bg-white/10 rounded-sm'
+          {...register('password', {required: true})}/>
+          <p className='font-semibold'>Número de teléfono</p>
+          <input type="number" className='bg-white/10 rounded-sm'
+          {...register('phoneNumber', {required: true, minLength: 10, maxLength: 10})}/>
 
-        <p>Estado en el que reside</p>
-        <input type="text"
-        {...register('state', {required: true})}/>
-        <p>Municipio en el que reside</p>
-        <input type="text" placeholder=''
-        {...register('municipality', {required: true})}/>
-        <p>Código Postal</p>
-        <input type="text"
-        {...register('zipCode', {required: true})}/>
-        <p>Colonia</p>
-        <input type="text" 
-        {...register('neighborhood', {required: true})}/>
+          <p className='font-semibold'>Estado en el que reside</p>
+          <input type="text" className='bg-white/10 rounded-sm'
+          {...register('state', {required: true})}/>
+          <p className='font-semibold'>Municipio en el que reside</p>
+          <input type="text" className='bg-white/10 rounded-sm'
+          {...register('municipality', {required: true})}/>
+          <p className='font-semibold'>Código Postal</p>
+          <input type="text" className='bg-white/10 rounded-sm'
+          {...register('zipCode', {required: true})}/>
+          <p className='font-semibold'>Colonia</p>
+          <input type="text" className='bg-white/10 rounded-sm'
+          {...register('neighborhood', {required: true})}/>
 
-        <p>Calle</p>
-        <input type="text"
-        {...register('street', {required: true})}/>
-        <p>Número exterior</p>
-        <input type="text"
-        {...register('houseNumber', {required: true})}/>
+          <p className='font-semibold'>Calle</p>
+          <input type="text" className='bg-white/10 rounded-sm'
+          {...register('street', {required: true})}/>
+          <p className='font-semibold'>Número exterior</p>
+          <input type="text" className='bg-white/10 rounded-sm'
+          {...register('houseNumber', {required: true})}/>
 
-        <button type='submit'>¡Registrarme!</button>
-      </form>
+          <button type='submit' className='bg-white font-semibold text-black p-2 rounded-xl m-4'>¡Registrarme!</button>
+          <Link to="/login" className='text-[1rem] text-center'>¿Ya tienes una cuenta? ¡Ingresa ahora!</Link>
+        </form>
+      </div>
     </div>
   )
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { request } from '@shared'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form'
 
 function LoginPage() {
@@ -17,13 +17,22 @@ function LoginPage() {
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <input type="email" placeholder='email' name='email'
-            {...register('email', {required: true})}/>
-            <input type="password" placeholder='password' name='password'
-            {...register('password', {required: true})}/>
-            <button type='submit'>Login</button>
-        </form>
+        <div className='grid grid-cols-2 text-xl'>
+            <img src="https://img1.picmix.com/output/stamp/normal/1/6/2/4/2304261_9a959.png" alt="img" className='w-screen'/>
+            <div className='flex flex-col items-center justify-center bg-blue-900 text-white'>
+                <p className='font-semibold p-5'>Es bueno verte de nuevo 😊</p>
+                <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col w-[19rem]'>
+                    <p className='font-semibold'>Correo electrónico</p>
+                    <input type="email" className='bg-white/10 rounded-sm'
+                    {...register('email', {required: true})}/>
+                    <p className='font-semibold'>Contraseña</p>
+                    <input type="password" className='bg-white/10 rounded-sm'
+                    {...register('password', {required: true})}/>
+                    <button type='submit' className='bg-white text-black font-semibold p-2 m-5 rounded-xl'>Iniciar sesión</button>
+                    <Link to="/register" className='text-[1rem] text-center'>¿No tienes una cuenta? ¡Registrate ahora!</Link>
+                </form>
+            </div>
+        </div>
     )
 }
 

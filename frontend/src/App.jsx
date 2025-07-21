@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
-import { LoginPage, RegisterPage, MainPage, ProductPage } from '@modules'
+import { LoginPage, RegisterPage, MainPage, ProductPage, ProfilePage } from '@modules'
 import { Layout } from '@shared'
 
 function App() {
@@ -13,6 +13,7 @@ function App() {
         <Route element = {<Layout />}>
           <Route path = "/" element={<MainPage />} />
           <Route path = "/product/:id" element = {<ProductPage />}/>
+          <Route path="/profile" element={<ProfilePage />} />
         </Route>
       </Routes>
     </BrowserRouter>
