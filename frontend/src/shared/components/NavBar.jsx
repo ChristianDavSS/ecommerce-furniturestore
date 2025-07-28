@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { request } from '@shared'
+import { LogoutButton } from '@modules'
 
 function NavBar() {
   return (
@@ -9,6 +9,9 @@ function NavBar() {
             <Link to="/profile">PERFIL</Link>
             <Link to="/">INICIO</Link>
             <Link to="/cart">CARRITO</Link>
+            <Link to="/login">INICIAR SESIÓN</Link>
+            <Link to="/register">REGISTRATE</Link>
+            <LogoutButton />
         </ul>
     </header>
   )

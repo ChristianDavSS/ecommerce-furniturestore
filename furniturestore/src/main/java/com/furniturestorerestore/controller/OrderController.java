@@ -1,8 +1,10 @@
 package com.furniturestorerestore.controller;
 
 import com.furniturestorerestore.dto.OrderDto;
+import com.furniturestorerestore.repository.entity.MyUser;
 import com.furniturestorerestore.repository.entity.enums.Status;
 import com.furniturestorerestore.service.OrderService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,8 +18,8 @@ public class OrderController {
     }
 
     @PostMapping
-    public OrderDto createOrder(@RequestParam Long userId) {
-        return orderService.saveOrder(userId);
+    public OrderDto createOrder(@AuthenticationPrincipal MyUser user) {
+        return orderService.saveOrder(user.getId());
     }
 
     @GetMapping
@@ -25,9 +27,9 @@ public class OrderController {
         return orderService.getAllOrders();
     }
 
-    @GetMapping("/user/{id}")
-    public List<OrderDto> getOrdersByUserId(@PathVariable Long id) {
-        return orderService.getOrdersByUserId(id);
+    @GetMapping("/user")
+    public List<OrderDto> getOrdersByUserId(@AuthenticationPrincipal MyUser user) {
+        return orderService.getOrdersByUserId(user.getId());
     }
 
     @GetMapping("/{id}")

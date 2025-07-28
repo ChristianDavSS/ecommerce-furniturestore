@@ -3,9 +3,13 @@ package com.furniturestorerestore.controller;
 import com.furniturestorerestore.dto.UserDto;
 import com.furniturestorerestore.dto.request.RegisterRequest;
 import com.furniturestorerestore.dto.request.ProfileRequest;
+import com.furniturestorerestore.repository.entity.MyUser;
 import com.furniturestorerestore.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -25,14 +29,16 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @GetMapping("/{id}")
-    public UserDto getUserById(@PathVariable("id") Long id) {
-        return userService.getUserById(id);
+    @GetMapping("/me")
+    public UserDto getUserById(@AuthenticationPrincipal MyUser user) {
+        if (user == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+        return userService.getUserById(user.getId());
     }
 
-    @PutMapping("/{id}")
-    public UserDto updateUserProfile(@PathVariable Long id, @RequestBody ProfileRequest userRequest) {
-        return userService.updateUserProfile(id, userRequest);
+    @PutMapping()
+    public UserDto updateUserProfile(@AuthenticationPrincipal MyUser user, @RequestBody ProfileRequest userRequest) {
+        if (user == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+        return userService.updateUserProfile(user.getId(), userRequest);
     }
 
     @DeleteMapping("/{id}")

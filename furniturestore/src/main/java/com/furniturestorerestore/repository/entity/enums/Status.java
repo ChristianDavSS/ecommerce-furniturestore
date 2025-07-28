@@ -1,5 +1,5 @@
 package com.furniturestorerestore.repository.entity.enums;
 
 public enum Status {
-    PENDING, DELIVERED, ON_THE_WAY
+    NOT_PAID, PENDING, ON_WAY, DELIVERED, CANCELLED
 }
