@@ -57,8 +57,8 @@ public class ProductService {
         );
     }
 
-    public ProductDto updateProduct(Long id, ProductRequest product) {
-        Product myProduct = productRepository.findById(id).orElseThrow(()->
+    public ProductDto updateProduct(ProductRequest product) {
+        Product myProduct = productRepository.findById(product.getId()).orElseThrow(()->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found")
         );
         Category category = categoryRepository.findById(product.getCategoryId()).orElseThrow(()->
