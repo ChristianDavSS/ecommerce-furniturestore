@@ -3,7 +3,8 @@
 ### This API was done using Spring Boot and Spring Security with Java 21, using sessions to make the website have a better experience.
 ### I created the best database I could for the project so it´ll be faster, lighter and the data would be safe.
 
-## ¿What can i improve?
-### In a future I´ll add the JWT instead of sessions, making it a safer experience for users.
+## ¿What can be improved?
+### Instead of sessions we can use JWT to protect the users from attackers, making it safer.
+### If it were for a real store, I´ll add the payment functionality and make it work for Paypal or bank accounts.
 
 # ¡THANK YOU! I hope this repository helps you developing :).
