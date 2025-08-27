@@ -36,7 +36,7 @@ public class OrderProductService {
             throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Too many products");
         }
 
-        OrderProductFK id = OrderProductFK.builder()
+        OrderProductPK id = OrderProductPK.builder()
                 .orderId(orderProductDto.getOrderId())
                 .productId(orderProductDto.getProductId())
                 .build();

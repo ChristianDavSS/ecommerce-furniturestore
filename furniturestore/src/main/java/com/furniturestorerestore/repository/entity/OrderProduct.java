@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class OrderProduct {
     @EmbeddedId
-    private OrderProductFK orderProductId;
+    private OrderProductPK orderProductId;
 
     @ManyToOne()
     @MapsId("orderId")

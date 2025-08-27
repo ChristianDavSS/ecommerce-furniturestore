@@ -12,7 +12,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class OrderProductFK implements Serializable {
+public class OrderProductPK implements Serializable {
     private Long orderId;
     private Long productId;
 
@@ -20,7 +20,7 @@ public class OrderProductFK implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        OrderProductFK that = (OrderProductFK) o;
+        OrderProductPK that = (OrderProductPK) o;
         return Objects.equals(orderId, that.orderId) && Objects.equals(productId, that.productId);
     }
 
